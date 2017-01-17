@@ -10,16 +10,16 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2017-01-16 23:55:02
+Date: 2017-01-17 17:12:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for book
+-- Table structure for booking
 -- ----------------------------
-DROP TABLE IF EXISTS `book`;
-CREATE TABLE `book` (
+DROP TABLE IF EXISTS `booking`;
+CREATE TABLE `booking` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `companyid` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -106,6 +106,7 @@ CREATE TABLE `user` (
   `name` varchar(20) NOT NULL DEFAULT '',
   `reg_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `role` smallint(6) NOT NULL,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0为普通员工，1为管理员',
   `companyid` int(11) DEFAULT NULL,
   `registration` bigint(20) DEFAULT NULL,
   `auth` varchar(30) DEFAULT '',
