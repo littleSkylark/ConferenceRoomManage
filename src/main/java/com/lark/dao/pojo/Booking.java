@@ -23,7 +23,9 @@ public class Booking {
 
     private Date bookTime;
 
-    public Booking(Integer id, Integer companyId, Integer userId, Integer roomId, String topic, Date date, Date startTime, Date endTime, String device, Date bookTime) {
+    private Boolean status;
+
+    public Booking(Integer id, Integer companyId, Integer userId, Integer roomId, String topic, Date date, Date startTime, Date endTime, String device, Date bookTime, Boolean status) {
         this.id = id;
         this.companyId = companyId;
         this.userId = userId;
@@ -34,6 +36,7 @@ public class Booking {
         this.endTime = endTime;
         this.device = device;
         this.bookTime = bookTime;
+        this.status = status;
     }
 
     public Booking() {
@@ -118,5 +121,13 @@ public class Booking {
 
     public void setBookTime(Date bookTime) {
         this.bookTime = bookTime;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

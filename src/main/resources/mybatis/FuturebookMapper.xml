@@ -117,6 +117,119 @@
   <resultMap id="BaseResultMap" type="com.lark.dao.pojo.Futurebook">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="roomId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIME" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyId, userId, roomId, date, startTime, endTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook (companyId, userId, roomId, 
+      date, startTime, endTime)
+    values (#{companyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, 
+      #{date,jdbcType=DATE}, #{startTime,jdbcType=TIME}, #{endTime,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        companyId,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="roomId != null">
+        roomId,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="startTime != null">
+        startTime,
+      </if>
+      <if test="endTime != null">
+        endTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    <set>
+      <if test="companyId != null">
+        companyId = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        roomId = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="startTime != null">
+        startTime = #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        endTime = #{endTime,jdbcType=TIME},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    set companyId = #{companyId,jdbcType=INTEGER},
+      userId = #{userId,jdbcType=INTEGER},
+      roomId = #{roomId,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      startTime = #{startTime,jdbcType=TIME},
+      endTime = #{endTime,jdbcType=TIME}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.Futurebook">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="companyid" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="roomId" javaType="java.lang.Integer" jdbcType="INTEGER" />

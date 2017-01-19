@@ -1,5 +1,7 @@
 package com.lark.dao.pojo;
 
+import java.util.Date;
+
 public class Room {
     private Integer id;
 
@@ -11,11 +13,17 @@ public class Room {
 
     private String name;
 
-    private Integer beginTime;
+    private Date beginTime;
 
-    private Integer endTime;
+    private Date endTime;
 
-    public Room(Integer id, Integer companyId, Integer minNum, Integer maxNum, String name, Integer beginTime, Integer endTime) {
+    private Date reg_time;
+
+    private String remarks;
+
+    private Boolean status;
+
+    public Room(Integer id, Integer companyId, Integer minNum, Integer maxNum, String name, Date beginTime, Date endTime, Date reg_time, String remarks, Boolean status) {
         this.id = id;
         this.companyId = companyId;
         this.minNum = minNum;
@@ -23,6 +31,9 @@ public class Room {
         this.name = name;
         this.beginTime = beginTime;
         this.endTime = endTime;
+        this.reg_time = reg_time;
+        this.remarks = remarks;
+        this.status = status;
     }
 
     public Room() {
@@ -69,19 +80,43 @@ public class Room {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getBeginTime() {
+    public Date getBeginTime() {
         return beginTime;
     }
 
-    public void setBeginTime(Integer beginTime) {
+    public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
 
-    public Integer getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Integer endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public Date getReg_time() {
+        return reg_time;
+    }
+
+    public void setReg_time(Date reg_time) {
+        this.reg_time = reg_time;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

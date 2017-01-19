@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2017-01-19 11:06:16
+Date: 2017-01-19 12:25:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,6 +30,7 @@ CREATE TABLE `booking` (
   `endTime` time NOT NULL,
   `device` varchar(50) NOT NULL DEFAULT '',
   `bookTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `企业id` (`companyId`) USING HASH,
   KEY `预订人id` (`userId`) USING HASH,
@@ -75,8 +76,11 @@ CREATE TABLE `room` (
   `minNum` int(11) NOT NULL,
   `maxNum` int(11) NOT NULL,
   `name` varchar(15) NOT NULL DEFAULT '',
-  `beginTime` int(11) NOT NULL,
-  `endTime` int(11) NOT NULL,
+  `beginTime` time NOT NULL,
+  `endTime` time NOT NULL,
+  `reg_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `remarks` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `企业id` (`companyId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
