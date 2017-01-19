@@ -4,13 +4,20 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
-    <classPathEntry location="F:\Work\Tools\database\mysql-connector-java-5.1.13-bin.jar" />
+    <classPathEntry location="F:\Work\Tools\database\mysql-connector-java-5.1.13-bin.jar"/>
 
     <context id="MysqlTables">
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--数据库连接信息-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/ConferenceRoomManage"
                         userId="root"
                         password=""/>
+
         <!--生成Model类存放位置-->
         <javaModelGenerator targetPackage="com.lark.dao.pojo" targetProject="src/main/java">
             <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
@@ -24,19 +31,51 @@
         </javaModelGenerator>
 
         <!--Mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
-        <sqlMapGenerator targetPackage="com.lark.dao.mapper" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="mybatis" targetProject="src/main/resources/">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
+        <!--mapper类生成配置-->
         <javaClientGenerator targetPackage="com.lark.dao.mapper" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="user"/>
-        <table tableName="room"/>
-        <table tableName="device"/>
-        <table tableName="room_device"/>
-        <table tableName="book"/>
-        <table tableName="futureBook"/>
+        <table tableName="user" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <!--用数据库真实名字-->
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="room" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="device" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="room_device" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="booking" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="futureBook" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
     </context>
 </generatorConfiguration>

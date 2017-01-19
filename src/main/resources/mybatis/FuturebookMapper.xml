@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lark.dao.mapper.FuturebookMapper">
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.Futurebook">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="roomId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIME" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyId, userId, roomId, date, startTime, endTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook (companyId, userId, roomId, 
+      date, startTime, endTime)
+    values (#{companyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, 
+      #{date,jdbcType=DATE}, #{startTime,jdbcType=TIME}, #{endTime,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        companyId,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="roomId != null">
+        roomId,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="startTime != null">
+        startTime,
+      </if>
+      <if test="endTime != null">
+        endTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    <set>
+      <if test="companyId != null">
+        companyId = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        roomId = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="startTime != null">
+        startTime = #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        endTime = #{endTime,jdbcType=TIME},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    set companyId = #{companyId,jdbcType=INTEGER},
+      userId = #{userId,jdbcType=INTEGER},
+      roomId = #{roomId,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      startTime = #{startTime,jdbcType=TIME},
+      endTime = #{endTime,jdbcType=TIME}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.Futurebook">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="roomId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIME" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyid, userId, roomId, date, startTime, endTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook (companyid, userId, roomId, 
+      date, startTime, endTime)
+    values (#{companyid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, 
+      #{date,jdbcType=DATE}, #{starttime,jdbcType=TIME}, #{endtime,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyid != null">
+        companyid,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="roomid != null">
+        roomId,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIME},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    <set>
+      <if test="companyid != null">
+        companyid = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        roomId = #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=TIME},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIME},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    set companyid = #{companyid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      roomId = #{roomid,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      startTime = #{starttime,jdbcType=TIME},
+      endTime = #{endtime,jdbcType=TIME}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.Futurebook">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="roomId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIME" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyid, userId, roomId, date, startTime, endTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook (companyid, userId, roomId, 
+      date, startTime, endTime)
+    values (#{companyid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, 
+      #{date,jdbcType=DATE}, #{starttime,jdbcType=TIME}, #{endtime,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyid != null">
+        companyid,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="roomid != null">
+        roomId,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIME},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    <set>
+      <if test="companyid != null">
+        companyid = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        roomId = #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=TIME},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIME},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    set companyid = #{companyid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      roomId = #{roomid,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      startTime = #{starttime,jdbcType=TIME},
+      endTime = #{endtime,jdbcType=TIME}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.Futurebook">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="roomId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIME" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, companyid, userId, roomId, date, startTime, endTime
+  </sql>
+  <select id="selectByExample" parameterType="com.lark.dao.pojo.FuturebookExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from futurebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from futurebook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lark.dao.pojo.FuturebookExample">
+    delete from futurebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook (companyid, userId, roomId, 
+      date, startTime, endTime)
+    values (#{companyid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, 
+      #{date,jdbcType=DATE}, #{starttime,jdbcType=TIME}, #{endtime,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.Futurebook">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyid != null">
+        companyid,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="roomid != null">
+        roomId,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIME},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lark.dao.pojo.FuturebookExample" resultType="java.lang.Long">
+    select count(*) from futurebook
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update futurebook
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyid != null">
+        companyid = #{record.companyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null">
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomid != null">
+        roomId = #{record.roomid,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null">
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.starttime != null">
+        startTime = #{record.starttime,jdbcType=TIME},
+      </if>
+      <if test="record.endtime != null">
+        endTime = #{record.endtime,jdbcType=TIME},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update futurebook
+    set id = #{record.id,jdbcType=INTEGER},
+      companyid = #{record.companyid,jdbcType=INTEGER},
+      userId = #{record.userid,jdbcType=INTEGER},
+      roomId = #{record.roomid,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE},
+      startTime = #{record.starttime,jdbcType=TIME},
+      endTime = #{record.endtime,jdbcType=TIME}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    <set>
+      <if test="companyid != null">
+        companyid = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        roomId = #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=TIME},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIME},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.Futurebook">
+    update futurebook
+    set companyid = #{companyid,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=INTEGER},
+      roomId = #{roomid,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      startTime = #{starttime,jdbcType=TIME},
+      endTime = #{endtime,jdbcType=TIME}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

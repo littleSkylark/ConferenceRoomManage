@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lark.dao.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.User">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="phoneNum" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reg_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="role" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="isAdmin" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="companyId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="registration" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="auth" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, phoneNum, email, password, name, reg_time, role, isAdmin, companyId, registration, 
+    auth
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (phoneNum, email, password, 
+      name, reg_time, role, 
+      isAdmin, companyId, registration, 
+      auth)
+    values (#{phoneNum,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{reg_time,jdbcType=TIMESTAMP}, #{role,jdbcType=SMALLINT}, 
+      #{isAdmin,jdbcType=BIT}, #{companyId,jdbcType=INTEGER}, #{registration,jdbcType=BIGINT}, 
+      #{auth,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="phoneNum != null">
+        phoneNum,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="reg_time != null">
+        reg_time,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="isAdmin != null">
+        isAdmin,
+      </if>
+      <if test="companyId != null">
+        companyId,
+      </if>
+      <if test="registration != null">
+        registration,
+      </if>
+      <if test="auth != null">
+        auth,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="phoneNum != null">
+        #{phoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reg_time != null">
+        #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=SMALLINT},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin,jdbcType=BIT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="registration != null">
+        #{registration,jdbcType=BIGINT},
+      </if>
+      <if test="auth != null">
+        #{auth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.User">
+    update user
+    <set>
+      <if test="phoneNum != null">
+        phoneNum = #{phoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reg_time != null">
+        reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=SMALLINT},
+      </if>
+      <if test="isAdmin != null">
+        isAdmin = #{isAdmin,jdbcType=BIT},
+      </if>
+      <if test="companyId != null">
+        companyId = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="registration != null">
+        registration = #{registration,jdbcType=BIGINT},
+      </if>
+      <if test="auth != null">
+        auth = #{auth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.User">
+    update user
+    set phoneNum = #{phoneNum,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      role = #{role,jdbcType=SMALLINT},
+      isAdmin = #{isAdmin,jdbcType=BIT},
+      companyId = #{companyId,jdbcType=INTEGER},
+      registration = #{registration,jdbcType=BIGINT},
+      auth = #{auth,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.User">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="phoneNum" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reg_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="role" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="isAdmin" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="companyid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="registration" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="auth" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, phoneNum, email, password, name, reg_time, role, isAdmin, companyid, registration, 
+    auth
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (phoneNum, email, password, 
+      name, reg_time, role, 
+      isAdmin, companyid, registration, 
+      auth)
+    values (#{phoneNum,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{reg_time,jdbcType=TIMESTAMP}, #{role,jdbcType=SMALLINT}, 
+      #{isAdmin,jdbcType=BIT}, #{companyid,jdbcType=INTEGER}, #{registration,jdbcType=BIGINT}, 
+      #{auth,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="phoneNum != null">
+        phoneNum,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="reg_time != null">
+        reg_time,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="isAdmin != null">
+        isAdmin,
+      </if>
+      <if test="companyid != null">
+        companyid,
+      </if>
+      <if test="registration != null">
+        registration,
+      </if>
+      <if test="auth != null">
+        auth,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="phoneNum != null">
+        #{phoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reg_time != null">
+        #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=SMALLINT},
+      </if>
+      <if test="isAdmin != null">
+        #{isAdmin,jdbcType=BIT},
+      </if>
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="registration != null">
+        #{registration,jdbcType=BIGINT},
+      </if>
+      <if test="auth != null">
+        #{auth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.User">
+    update user
+    <set>
+      <if test="phoneNum != null">
+        phoneNum = #{phoneNum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="reg_time != null">
+        reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=SMALLINT},
+      </if>
+      <if test="isAdmin != null">
+        isAdmin = #{isAdmin,jdbcType=BIT},
+      </if>
+      <if test="companyid != null">
+        companyid = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="registration != null">
+        registration = #{registration,jdbcType=BIGINT},
+      </if>
+      <if test="auth != null">
+        auth = #{auth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.User">
+    update user
+    set phoneNum = #{phoneNum,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      role = #{role,jdbcType=SMALLINT},
+      isAdmin = #{isAdmin,jdbcType=BIT},
+      companyid = #{companyid,jdbcType=INTEGER},
+      registration = #{registration,jdbcType=BIGINT},
+      auth = #{auth,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.User">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="phoneNum" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reg_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="role" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="isAdmin" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="companyid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="registration" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="auth" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, phoneNum, email, password, name, reg_time, role, isAdmin, companyid, registration, 
+    auth
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (phoneNum, email, password, 
+      name, reg_time, role, 
+      isAdmin, companyid, registration, 
+      auth)
+    values (#{phonenum,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, #{role,jdbcType=SMALLINT}, 
+      #{isadmin,jdbcType=BIT}, #{companyid,jdbcType=INTEGER}, #{registration,jdbcType=BIGINT}, 
+      #{auth,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="phonenum != null">
+        phoneNum,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="regTime != null">
+        reg_time,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="isadmin != null">
+        isAdmin,
+      </if>
+      <if test="companyid != null">
+        companyid,
+      </if>
+      <if test="registration != null">
+        registration,
+      </if>
+      <if test="auth != null">
+        auth,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="phonenum != null">
+        #{phonenum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null">
+        #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=SMALLINT},
+      </if>
+      <if test="isadmin != null">
+        #{isadmin,jdbcType=BIT},
+      </if>
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="registration != null">
+        #{registration,jdbcType=BIGINT},
+      </if>
+      <if test="auth != null">
+        #{auth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.User">
+    update user
+    <set>
+      <if test="phonenum != null">
+        phoneNum = #{phonenum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null">
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=SMALLINT},
+      </if>
+      <if test="isadmin != null">
+        isAdmin = #{isadmin,jdbcType=BIT},
+      </if>
+      <if test="companyid != null">
+        companyid = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="registration != null">
+        registration = #{registration,jdbcType=BIGINT},
+      </if>
+      <if test="auth != null">
+        auth = #{auth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.User">
+    update user
+    set phoneNum = #{phonenum,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      reg_time = #{regTime,jdbcType=TIMESTAMP},
+      role = #{role,jdbcType=SMALLINT},
+      isAdmin = #{isadmin,jdbcType=BIT},
+      companyid = #{companyid,jdbcType=INTEGER},
+      registration = #{registration,jdbcType=BIGINT},
+      auth = #{auth,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.User">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="phoneNum" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reg_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="role" javaType="java.lang.Short" jdbcType="SMALLINT" />
+      <arg column="isAdmin" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="companyid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="registration" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="auth" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, phoneNum, email, password, name, reg_time, role, isAdmin, companyid, registration, 
+    auth
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (phoneNum, email, password, 
+      name, reg_time, role, 
+      isAdmin, companyid, registration, 
+      auth)
+    values (#{phonenum,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, #{role,jdbcType=SMALLINT}, 
+      #{isadmin,jdbcType=BIT}, #{companyid,jdbcType=INTEGER}, #{registration,jdbcType=BIGINT}, 
+      #{auth,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.User">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="phonenum != null">
+        phoneNum,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="regTime != null">
+        reg_time,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="isadmin != null">
+        isAdmin,
+      </if>
+      <if test="companyid != null">
+        companyid,
+      </if>
+      <if test="registration != null">
+        registration,
+      </if>
+      <if test="auth != null">
+        auth,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="phonenum != null">
+        #{phonenum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null">
+        #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=SMALLINT},
+      </if>
+      <if test="isadmin != null">
+        #{isadmin,jdbcType=BIT},
+      </if>
+      <if test="companyid != null">
+        #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="registration != null">
+        #{registration,jdbcType=BIGINT},
+      </if>
+      <if test="auth != null">
+        #{auth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.User">
+    update user
+    <set>
+      <if test="phonenum != null">
+        phoneNum = #{phonenum,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null">
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=SMALLINT},
+      </if>
+      <if test="isadmin != null">
+        isAdmin = #{isadmin,jdbcType=BIT},
+      </if>
+      <if test="companyid != null">
+        companyid = #{companyid,jdbcType=INTEGER},
+      </if>
+      <if test="registration != null">
+        registration = #{registration,jdbcType=BIGINT},
+      </if>
+      <if test="auth != null">
+        auth = #{auth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.User">
+    update user
+    set phoneNum = #{phonenum,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      reg_time = #{regTime,jdbcType=TIMESTAMP},
+      role = #{role,jdbcType=SMALLINT},
+      isAdmin = #{isadmin,jdbcType=BIT},
+      companyid = #{companyid,jdbcType=INTEGER},
+      registration = #{registration,jdbcType=BIGINT},
+      auth = #{auth,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
