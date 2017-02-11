@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : local
 Source Server Version : 50715
 Source Host           : localhost:3306
-Source Database       : conferenceroommanage
+Source Database       : ConferenceRoomManage
 
 Target Server Type    : MYSQL
 Target Server Version : 50715
 File Encoding         : 65001
 
-Date: 2017-01-19 12:25:51
+Date: 2017-01-20 15:58:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,10 +49,10 @@ CREATE TABLE `device` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for futurebook
+-- Table structure for futurebooking
 -- ----------------------------
-DROP TABLE IF EXISTS `futurebook`;
-CREATE TABLE `futurebook` (
+DROP TABLE IF EXISTS `futureBooking`;
+CREATE TABLE `futureBooking` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `companyId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,

@@ -10,12 +10,18 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!--<mvc:annotation-driven/>-->
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="css/**" location="css/"/>
+    <mvc:resources mapping="font/**" location="font/"/>
+    <mvc:resources mapping="img/**" location="img/"/>
+    <mvc:resources mapping="js/**" location="js/"/>
+    <mvc:resources mapping="temp/**" location="temp/"/>
+
     <context:component-scan base-package="com.lark.controller"/>
 
     <!--规定模板文件的类型和位置-->
     <bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath" value="/WEB-INF/templates/"/>
+        <property name="resourceLoaderPath" value="/WEB-INF/view/"/>
         <property name="velocityProperties">
             <props>
                 <prop key="input.encoding">utf-8</prop>

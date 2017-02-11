@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lark.dao.mapper.RoomMapper">
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.Room">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="minNum" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="maxNum" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="beginTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="reg_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="remarks" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Boolean" jdbcType="BIT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyId, minNum, maxNum, name, beginTime, endTime, reg_time, remarks, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCompanyId" resultType="com.lark.dao.pojo.Room">
+    select * from room where companyId=#{companyId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from room
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.Room">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into room (companyId, minNum, maxNum, 
+      name, beginTime, endTime, 
+      reg_time, remarks, status
+      )
+    values (#{companyId,jdbcType=INTEGER}, #{minNum,jdbcType=INTEGER}, #{maxNum,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIME}, #{endTime,jdbcType=TIME}, 
+      #{reg_time,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{status,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.Room">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        companyId,
+      </if>
+      <if test="minNum != null">
+        minNum,
+      </if>
+      <if test="maxNum != null">
+        maxNum,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="beginTime != null">
+        beginTime,
+      </if>
+      <if test="endTime != null">
+        endTime,
+      </if>
+      <if test="reg_time != null">
+        reg_time,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="minNum != null">
+        #{minNum,jdbcType=INTEGER},
+      </if>
+      <if test="maxNum != null">
+        #{maxNum,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null">
+        #{beginTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIME},
+      </if>
+      <if test="reg_time != null">
+        #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.Room">
+    update room
+    <set>
+      <if test="companyId != null">
+        companyId = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="minNum != null">
+        minNum = #{minNum,jdbcType=INTEGER},
+      </if>
+      <if test="maxNum != null">
+        maxNum = #{maxNum,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null">
+        beginTime = #{beginTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        endTime = #{endTime,jdbcType=TIME},
+      </if>
+      <if test="reg_time != null">
+        reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.Room">
+    update room
+    set companyId = #{companyId,jdbcType=INTEGER},
+      minNum = #{minNum,jdbcType=INTEGER},
+      maxNum = #{maxNum,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      beginTime = #{beginTime,jdbcType=TIME},
+      endTime = #{endTime,jdbcType=TIME},
+      reg_time = #{reg_time,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
