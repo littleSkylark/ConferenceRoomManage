@@ -52,7 +52,7 @@ public class BookingService {
             bookingShow.setEndTime(DateFormat.toTime(booking.getEndTime()));
 
             Room room = roomMapper.selectByPrimaryKey(booking.getRoomId());
-            bookingShow.setAddress(room.getName()+"("+room.getMinNum()+"~"+room.getMaxNum()+"人)");
+            bookingShow.setAddress(room.getName()+" ( "+room.getMinNum()+"~"+room.getMaxNum()+"人 )");
 
             User user = userMapper.selectByPrimaryKey(booking.getUserId());
             bookingShow.setBookPeople(user.getName());
@@ -66,7 +66,7 @@ public class BookingService {
         List<Room> rooms= roomMapper.selectRoomNameByCompanyId(companyId);
         List<String> lists=new LinkedList<>();
         for (Room room : rooms) {
-            lists.add(room.getName()+"("+room.getMinNum()+"~"+room.getMaxNum()+"人)");
+            lists.add(room.getName()+" ( "+room.getMinNum()+"~"+room.getMaxNum()+"人 )");
         }
         return lists;
     }
