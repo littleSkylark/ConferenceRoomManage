@@ -1,7 +1,10 @@
 package com.lark.controller;
 
+import com.google.gson.Gson;
+import com.lark.message.BookingShow;
 import com.lark.service.BookingService;
 
+import com.lark.utils.DateFormat;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by skylark on 2017/1/19.
@@ -30,7 +34,7 @@ public class BookingController {
     public String bookingShow(@RequestParam(value = "date", required = false) String str_date,
                               HttpSession session, ModelMap map) {
         logger.info("/booking/show");
-        int id=0;
+        int id = 2;
         /*try {
             id= (int) session.getAttribute("id");
         } catch (Exception e) {
@@ -39,16 +43,19 @@ public class BookingController {
         int  companyId = (int) session.getAttribute("companyId");
         session.getAttribute("");
         ...*/
-        int companyId=1;
-        Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            date = sdf.parse(str_date);
-        } catch (Exception e) {
-            date = new Date();
-        }
-        bookingService.queryFutureBookingByDate(id,companyId,date);
-        logger.info(sdf.format(date));
+
+        int companyId = 2;
+        str_date = "2017-01-21";
+
+        List<String> roomNames = bookingService.queryRoomNameByCompanyId(companyId);
+
+        Date date = DateFormat.toDate(str_date);
+        List<BookingShow> bookingShows = bookingService.queryFutureBookingByDate(id,companyId, date);
+        Gson gson = new Gson();
+        String roomNamesJson=gson.toJson(roomNames);
+        String dataJson = gson.toJson(bookingShows);
+        logger.info("roomNames:"+roomNamesJson);
+        logger.info("bookingShow:" + dataJson);
         return "bookingShow";
     }
 

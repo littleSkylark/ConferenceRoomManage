@@ -16,6 +16,7 @@
     <mvc:resources mapping="img/**" location="img/"/>
     <mvc:resources mapping="js/**" location="js/"/>
     <mvc:resources mapping="temp/**" location="temp/"/>
+    <mvc:resources mapping="/favicon.ico" location="/"/>
 
     <context:component-scan base-package="com.lark.controller"/>
 

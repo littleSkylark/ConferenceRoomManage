@@ -24,10 +24,10 @@
     from room
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByCompanyId" resultType="com.lark.dao.pojo.Room">
-    select * from room where companyId=#{companyId}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectRoomNameByCompanyId" resultType="java.lang.String">
+      select name from room where companyId=#{companyId};
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from room
     where id = #{id,jdbcType=INTEGER}
   </delete>

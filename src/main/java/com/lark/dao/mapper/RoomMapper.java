@@ -1,9 +1,12 @@
 package com.lark.dao.mapper;
 
 import com.lark.dao.pojo.Room;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface RoomMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -13,9 +16,9 @@ public interface RoomMapper {
 
     Room selectByPrimaryKey(Integer id);
 
-    List<Room> selectByCompanyId(Integer companyId);
-
     int updateByPrimaryKeySelective(Room record);
 
     int updateByPrimaryKey(Room record);
+
+    List<String> selectRoomNameByCompanyId(@Param("companyId") int companyId);
 }
