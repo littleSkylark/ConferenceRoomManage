@@ -1,18 +1,17 @@
 package com.lark.message;
 
 
-import java.util.Date;
-
 /**
  * Created by skylark on 2017/2/12.
  */
 public class BookingShow {
     private String id;
+    private String date;
     private String startTime;
     private String endTime;
     private String address;
     private String bookPeople;
-    private String meetingTheme;
+    private String mettingTheme;
 
     public String getId() {
         return id;
@@ -20,6 +19,14 @@ public class BookingShow {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getStartTime() {
@@ -46,12 +53,12 @@ public class BookingShow {
         this.bookPeople = bookPeople;
     }
 
-    public String getMeetingTheme() {
-        return meetingTheme;
+    public String getMettingTheme() {
+        return mettingTheme;
     }
 
-    public void setMeetingTheme(String meetingTheme) {
-        this.meetingTheme = meetingTheme;
+    public void setMettingTheme(String mettingTheme) {
+        this.mettingTheme = mettingTheme;
     }
 
     public String getAddress() {

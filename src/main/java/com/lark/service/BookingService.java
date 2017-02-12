@@ -34,6 +34,7 @@ public class BookingService {
     public List<BookingShow> queryFutureBookingByDate(int id, int companyId, Date date) {
         List<Integer> bookingIds = futureBookingMapper.selectByCompanyId(companyId, date);
         List<BookingShow> lists = new LinkedList<>();
+        String strDate=DateFormat.toStrDate(date);
         for (Integer bookingId : bookingIds) {
             Booking booking = bookingMapper.selectByPrimaryKey(bookingId);
             if (!booking.getStatus()) {
@@ -45,7 +46,8 @@ public class BookingService {
             } else {
                 bookingShow.setId("booked");
             }
-            bookingShow.setMeetingTheme(booking.getTopic());
+            bookingShow.setDate(strDate);
+            bookingShow.setMettingTheme(booking.getTopic());
             bookingShow.setStartTime(DateFormat.toTime(booking.getStartTime()));
             bookingShow.setEndTime(DateFormat.toTime(booking.getEndTime()));
 

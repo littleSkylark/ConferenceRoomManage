@@ -54,6 +54,8 @@ public class BookingController {
         Gson gson = new Gson();
         String roomNamesJson=gson.toJson(roomNames);
         String dataJson = gson.toJson(bookingShows);
+        map.put("roomNames",roomNamesJson);
+        map.put("data",dataJson);
         logger.info("roomNames:"+roomNamesJson);
         logger.info("bookingShow:" + dataJson);
         return "bookingShow";
