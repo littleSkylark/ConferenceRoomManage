@@ -20,5 +20,5 @@ public interface RoomMapper {
 
     int updateByPrimaryKey(Room record);
 
-    List<String> selectRoomNameByCompanyId(@Param("companyId") int companyId);
+    List<Room> selectRoomNameByCompanyId(@Param("companyId") int companyId);
 }
