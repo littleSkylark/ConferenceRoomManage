@@ -89,7 +89,13 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-4">地点</label>
-                    <div class="col-offset-4">平台中心会议室（1~6人）</div>
+                    <div class="col-offset-4">
+                        <select name="room" id="room">
+                            #foreach($roomId in ${rooms.keySet()})
+                                <option value="$roomId">${rooms.get($roomId)}</option>
+                            #end
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-4">设备</label>
@@ -164,19 +170,10 @@
 <script src="/js/mcalendar.js"></script>
 <script>
     $(function(){
-
         $('.metting-reservation-bd').timeChart({
             'xAxis':['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00'],
-            /*'yAxis':['平台中心会议室1（1~6人）','平台中心会议室2（1~6人）','接待室1（6~12人）','接待室2（6~12人）','IT会议室1（12人以上）','IT会议室2（12人以上）','接待室3（6~12人）','接待室4（6~12人）','IT会议室3（12人以上）','IT会议室4（12人以上）','IT会议室5（12人以上）','IT会议室6（12人以上）'],*/
-            'yAxis':${roomNames},
+            'yAxis':[#foreach($roomId in ${rooms.keySet()})"${rooms.get($roomId)}",#end],
             'xStep':2,
-            /*'data':[
-                {'id':'mybook','date':'201-11-20','startTime':'08:30','endTime':'11:30','address':'平台中心会议室1（1~6人）','bookPeople':'小燕','mettingTheme':'项目会议讨论'},
-                {'id':'mybook','date':'201-11-20','startTime':'14:30','endTime':'16:00','address':'平台中心会议室2（1~6人）','bookPeople':'欧阳菲菲','mettingTheme':'项目会议讨论'},
-                {'id':'booked','startTime':'10:00','endTime':'12:30','address':'接待室1（6~12人）'},
-                {'id':'booked','startTime':'15:00','endTime':'17:30','address':'接待室2（6~12人）'},
-                {'id':'booked','startTime':'11:00','endTime':'14:00','address':'IT会议室5（12人以上）'}
-            ],*/
             'data':${data},
             'showFigureNote':true,
             'figureNote':[

@@ -12,9 +12,7 @@ import com.lark.utils.DateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by skylark on 2017/1/19.
@@ -34,7 +32,7 @@ public class BookingService {
     public List<BookingShow> queryFutureBookingByDate(int id, int companyId, Date date) {
         List<Integer> bookingIds = futureBookingMapper.selectByCompanyId(companyId, date);
         List<BookingShow> lists = new LinkedList<>();
-        String strDate=DateFormat.toStrDate(date);
+        String strDate = DateFormat.toStrDate(date);
         for (Integer bookingId : bookingIds) {
             Booking booking = bookingMapper.selectByPrimaryKey(bookingId);
             if (!booking.getStatus()) {
@@ -52,7 +50,7 @@ public class BookingService {
             bookingShow.setEndTime(DateFormat.toTime(booking.getEndTime()));
 
             Room room = roomMapper.selectByPrimaryKey(booking.getRoomId());
-            bookingShow.setAddress(room.getName()+" ( "+room.getMinNum()+"~"+room.getMaxNum()+"人 )");
+            bookingShow.setAddress(room.getName() + " ( " + room.getMinNum() + "~" + room.getMaxNum() + "人 )");
 
             User user = userMapper.selectByPrimaryKey(booking.getUserId());
             bookingShow.setBookPeople(user.getName());
@@ -62,12 +60,12 @@ public class BookingService {
         return lists;
     }
 
-    public List<String> queryRoomNameByCompanyId(int companyId) {
-        List<Room> rooms= roomMapper.selectRoomNameByCompanyId(companyId);
-        List<String> lists=new LinkedList<>();
+    public Map<Integer, String> queryRoomNameByCompanyId(int companyId) {
+        List<Room> rooms = roomMapper.selectRoomNameByCompanyId(companyId);
+        Map<Integer, String> maps = new HashMap<>();
         for (Room room : rooms) {
-            lists.add(room.getName()+" ( "+room.getMinNum()+"~"+room.getMaxNum()+"人 )");
+            maps.put(room.getId(), room.getName() + " ( " + room.getMinNum() + "~" + room.getMaxNum() + "人 )");
         }
-        return lists;
+        return maps;
     }
 }

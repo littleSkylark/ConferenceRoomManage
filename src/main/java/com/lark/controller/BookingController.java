@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by skylark on 2017/1/19.
@@ -47,17 +48,19 @@ public class BookingController {
         int companyId = 2;
         str_date = "2017-01-21";
 
-        List<String> roomNames = bookingService.queryRoomNameByCompanyId(companyId);
+        Map<Integer, String> rooms = bookingService.queryRoomNameByCompanyId(companyId);
 
         Date date = DateFormat.toDate(str_date);
-        List<BookingShow> bookingShows = bookingService.queryFutureBookingByDate(id,companyId, date);
+        List<BookingShow> bookingShows = bookingService.queryFutureBookingByDate(id, companyId, date);
         Gson gson = new Gson();
-        String roomNamesJson=gson.toJson(roomNames);
         String dataJson = gson.toJson(bookingShows);
-        map.put("roomNames",roomNamesJson);
-        map.put("data",dataJson);
-        logger.info("roomNames:"+roomNamesJson);
+        map.put("rooms", rooms);
+        map.put("data", dataJson);
+
+        String roomNamesJson = gson.toJson(rooms);
+        logger.info("roomNames:" + roomNamesJson);
         logger.info("bookingShow:" + dataJson);
+
         return "bookingShow";
     }
 
