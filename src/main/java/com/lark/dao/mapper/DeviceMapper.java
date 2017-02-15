@@ -1,7 +1,9 @@
 package com.lark.dao.mapper;
 
 import com.lark.dao.pojo.Device;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface DeviceMapper {
     int deleteByPrimaryKey(Integer id);
 

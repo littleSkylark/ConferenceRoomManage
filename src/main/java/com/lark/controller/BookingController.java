@@ -1,24 +1,25 @@
 package com.lark.controller;
 
-import com.google.gson.Gson;
 import com.lark.message.BookingShow;
+import com.lark.message.RoomShow;
 import com.lark.service.BookingService;
 
+import com.lark.service.RoomService;
 import com.lark.utils.DateFormat;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,12 +30,23 @@ import java.util.Map;
 public class BookingController {
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private RoomService roomService;
+
     private final Logger logger = Logger.getLogger(this.getClass());
 
     @RequestMapping("/booking/show")
-    public String bookingShow(@RequestParam(value = "date", required = false) String str_date,
-                              HttpSession session, ModelMap map) {
+    public String bookingShow(){
         logger.info("/booking/show");
+
+        return "bookingShow";
+    }
+
+    @RequestMapping("/booking/query")
+    @ResponseBody
+    public Map<String,Object> bookingQuery(@RequestParam(value = "date", required = false) String str_date,
+                                          HttpSession session) {
+        logger.info("/booking/query");
         int id = 2;
         /*try {
             id= (int) session.getAttribute("id");
@@ -48,20 +60,15 @@ public class BookingController {
         int companyId = 2;
         str_date = "2017-01-21";
 
-        Map<Integer, String> rooms = bookingService.queryRoomNameByCompanyId(companyId);
+        List<RoomShow> roomShows = roomService.queryRoomByCompanyId(companyId);
 
         Date date = DateFormat.toDate(str_date);
         List<BookingShow> bookingShows = bookingService.queryFutureBookingByDate(id, companyId, date);
-        Gson gson = new Gson();
-        String dataJson = gson.toJson(bookingShows);
-        map.put("rooms", rooms);
-        map.put("data", dataJson);
 
-        String roomNamesJson = gson.toJson(rooms);
-        logger.info("roomNames:" + roomNamesJson);
-        logger.info("bookingShow:" + dataJson);
-
-        return "bookingShow";
+        Map<String,Object> map=new HashMap<>();
+        map.put("room",roomShows);
+        map.put("booking",bookingShows);
+        return map;
     }
 
     @RequestMapping(value = "/booking", method = RequestMethod.GET)
@@ -70,7 +77,7 @@ public class BookingController {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
-        writer.print("ok");
+        writer.print("[ok]");
         writer.flush();
         writer.close();
     }

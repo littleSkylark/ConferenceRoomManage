@@ -17,7 +17,10 @@
     from room_device
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByRoomId" resultType="com.lark.dao.pojo.RoomDevice">
+      select * from room_device where roomId=#{roomId};
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from room_device
     where id = #{id,jdbcType=INTEGER}
   </delete>

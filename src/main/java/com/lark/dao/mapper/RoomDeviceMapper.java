@@ -1,7 +1,10 @@
 package com.lark.dao.mapper;
 
 import com.lark.dao.pojo.RoomDevice;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface RoomDeviceMapper {
@@ -16,4 +19,6 @@ public interface RoomDeviceMapper {
     int updateByPrimaryKeySelective(RoomDevice record);
 
     int updateByPrimaryKey(RoomDevice record);
+
+    List<RoomDevice> selectByRoomId(@Param("roomId") Integer roomId);
 }

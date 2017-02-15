@@ -60,12 +60,4 @@ public class BookingService {
         return lists;
     }
 
-    public Map<Integer, String> queryRoomNameByCompanyId(int companyId) {
-        List<Room> rooms = roomMapper.selectRoomNameByCompanyId(companyId);
-        Map<Integer, String> maps = new HashMap<>();
-        for (Room room : rooms) {
-            maps.put(room.getId(), room.getName() + " ( " + room.getMinNum() + "~" + room.getMaxNum() + "人 )");
-        }
-        return maps;
-    }
 }

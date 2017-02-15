@@ -33,7 +33,7 @@
 <div class="container wrap">
     <div class="metting-reservation-hd">
         <div class="metting-date">
-            <span class="date-txt">2016-07-01</span>
+            <span class="date-txt"></span>
             <a href="javascript:" class="icon-date ml6"></a>
             <div id="oDate"></div>
         </div>
@@ -63,9 +63,10 @@
                 <div class="form-group mb4" style="z-index: 3;">
                     <label class="control-label col-4">日期</label>
                     <div class="col-offset-4">
-                        <input type="text" class="u-txt date fl" value="2016-07-01" onfocus="SelectDate(this, 0);">
+                        <input type="text" class="u-txt date fl" id="bookingDate" value="" onchange="" onfocus="SelectDate(this, 0);">
                         <div class="u-select j-select1 fl ml10" style="width: 65px;">
-                            <select name="province" id="province">
+                            <select name="province" id="province" onchange="">
+
                                 <option>08:00</option>
                                 <option>08:30</option>
                                 <option>09:00</option>
@@ -75,7 +76,7 @@
                             </select>
                         </div>
                         <span class="fl ml6 mr6">~</span>
-                        <input type="text" class="u-txt date fl" value="2016-07-01" onfocus="SelectDate(this, 0);">
+                        #*<input type="text" class="u-txt date fl" value="2016-07-01" onfocus="SelectDate(this, 0);">*#
                         <div class="u-select j-select2 fl ml10" style="width: 65px;">
                             <select name="province" id="province">
                                 <option>12:00</option>
@@ -89,18 +90,16 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-4">地点</label>
-                    <div class="col-offset-4">
+                    <div class="col-offset-4 u-select j-select2 fl ml0" style="width: 30%;">
                         <select name="room" id="room">
-                            #foreach($roomId in ${rooms.keySet()})
-                                <option value="$roomId">${rooms.get($roomId)}</option>
-                            #end
+
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-4">设备</label>
                     <div class="col-offset-4 m-checkbox-horizontal">
-                        <label class="u-checkbox checked"><input type="checkbox" checked=""><i class="ico"></i>画板</label>
+                        <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>画板</label>
                         <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>笔记本电脑</label>
                         <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>翻页笔</label>
                         <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>智能电话</label>
@@ -136,7 +135,7 @@
         </div>
         <div class="pop-ft mt50">
             <div class="m-btn-group tc">
-                <a href="#" class="u-btn u-btn-primary" onclick="bookSuccess()">确定</a>
+                <a href="#" class="u-btn u-btn-primary" onclick="booking()">确定</a>
                 <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
             </div>
         </div>
@@ -170,18 +169,22 @@
 <script src="/js/mcalendar.js"></script>
 <script>
     $(function(){
-        $('.metting-reservation-bd').timeChart({
+        /*$('.metting-reservation-bd').timeChart({
             'xAxis':['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00'],
-            'yAxis':[#foreach($roomId in ${rooms.keySet()})"${rooms.get($roomId)}",#end],
+            'yAxis':[],
             'xStep':2,
-            'data':${data},
+            'data':,
             'showFigureNote':true,
             'figureNote':[
                 {'text':'我的预定','bgcolor':'#47C978','borderC':'#47C978'},
                 {'text':'已被预定','bgcolor':'#F4F4F4','borderC':'#F4F4F4'},
                 {'text':'可预定','bgcolor':'#fff','borderC':'#eee'}
             ]
-        });
+        });*/
+        var formatDate = new Date().format("yyyy-MM-dd");
+        $('.date-txt').html(formatDate);
+        $('#bookingDate').val(formatDate);
+        bookingQuery(formatDate);
         var d=new Date(),aDate=$('.date-txt').html().split('-');
         d.setFullYear(aDate[0],aDate[1]-1,aDate[2]);
         $('#oDate').calendar({
@@ -199,11 +202,50 @@
         $('.u-select').select();
         $('.u-checkbox').checkbox();
     })
+
+    function bookingQuery(date) {
+        jQuery.getJSON("/booking/query",{date:date},function (result) {
+            var roomNames="[\"";
+            for(i=0;i<result.room.length;i++){
+                roomNames+=result.room[i].name+"\",\"";
+            }
+            roomNames=roomNames.substring(0,roomNames.length-2)+"]";
+            console.log(roomNames)
+            var booking=JSON.stringify(result.booking);
+            console.log(booking);
+            $('.metting-reservation-bd').timeChart({
+                'xAxis':['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00'],
+                'yAxis':JSON.parse(roomNames),
+                'xStep':2,
+                'data':result.booking,
+                'showFigureNote':true,
+                'figureNote':[
+                    {'text':'我的预定','bgcolor':'#47C978','borderC':'#47C978'},
+                    {'text':'已被预定','bgcolor':'#F4F4F4','borderC':'#F4F4F4'},
+                    {'text':'可预定','bgcolor':'#fff','borderC':'#eee'}
+                ]
+            });
+        });
+    }
+
     function bookMetting(){
         dialog.init({
             'w':735,
             'h':502,
             'layer':'.lay-book'
+        })
+    }
+    function booking() {
+        jQuery.ajax({
+            type:'POST',
+            url:"/booking",
+            data:{
+
+            },
+            success:function (result) {
+                var jsonObj=JSON.parse(result)
+                alert(jsonObj);
+            }
         })
     }
     function bookSuccess(){
