@@ -26,6 +26,9 @@
     from booking
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByRoomId" resultType="com.lark.dao.pojo.Booking">
+    select * from booking where roomId=#{roomId,jdbcType=INTEGER} and date=#{date,jdbcType=DATE};
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from booking
     where id = #{id,jdbcType=INTEGER}

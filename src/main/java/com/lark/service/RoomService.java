@@ -36,6 +36,8 @@ public class RoomService {
             RoomShow roomShow=new RoomShow();
             roomShow.setId(room.getId());
             roomShow.setName(room.getName()+" ( "+room.getMinNum()+"~"+room.getMaxNum()+"人 )");
+            roomShow.setStartTime(DateFormat.toTime(room.getBeginTime()));
+            roomShow.setEndTime(DateFormat.toTime(room.getEndTime()));
 /**/
             List<String> deviceNames=new LinkedList<>();
             List<RoomDevice> roomDevices = roomDeviceMapper.selectByRoomId(room.getId());
@@ -44,18 +46,6 @@ public class RoomService {
                 deviceNames.add(device.getName());
             }
             roomShow.setDeviceNames(deviceNames);
-/**/
-            List<String> times=new LinkedList<>();
-            Date beginTime= (room.getBeginTime());
-            Date endTime = room.getEndTime();
-            Calendar calendar=Calendar.getInstance();
-            while(beginTime.compareTo(endTime)<=0){
-                times.add(DateFormat.toTime(beginTime));
-                calendar.setTime(beginTime);
-                calendar.add(Calendar.MINUTE,30);
-                beginTime=calendar.getTime();
-            }
-            roomShow.setTimes(times);
 
             roomShows.add(roomShow);
         }

@@ -8,6 +8,36 @@
     <link rel="stylesheet" type="text/css" href="/css/common.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <script type="text/javascript" src="/js/jquery.js"></script>
+    <style type="text/css">
+        .bookingTime {
+            width: 126px;
+            width: 102px;
+            height: 36px;
+            float: left;
+            display: inline;
+            border: 1px solid #e5e5e5;
+        }
+
+        .devices {
+            position: relative;
+            font-size: 14px;
+            min-height: 20px;
+            line-height: 20px;
+            color: #666;
+            display: inline-block;
+            cursor: pointer;
+            padding-right: 22px;
+        }
+
+        .devices input {
+            border-radius: 0;
+            width: 14px;
+            height: 14px;
+            outline: none;
+            margin: 5px 8px;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -57,87 +87,69 @@
                 <div class="form-group">
                     <label class="control-label col-4"><i>*</i>主题</label>
                     <div class="col-offset-4">
-                        <input class="u-txt" type="text" style="width: 495px;">
+                        <input id="topic" class="u-txt" type="text" style="width: 495px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-4">地点</label>
+                    <div class="col-offset-4">
+                        <select onchange="changeRoom()" name="roomId" id="roomId" class="bookingTime"
+                                style="margin:0;width: 30%;">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group mb4" style="z-index: 3;">
                     <label class="control-label col-4">日期</label>
-                    <input class="col-offset-4">
-                    <input type="text" class="u-txt date fl" id="bookingDate""
-                           onfocus="SelectDate(this, 0);">
-                    <div class="u-select j-select1 fl ml10" style="width: 65px;">
-                        <select name="province" id="province" onchange="">
-
-                            <option>08:00</option>
-                            <option>08:30</option>
-                            <option>09:00</option>
-                            <option>09:30</option>
-                            <option>10:00</option>
-                            <option>10:30</option>
+                    <div class="col-offset-4">
+                        <input type="text" class="u-txt date fl" id="bookingDate" onfocus="SelectDate(this, 0);">
+                        <select name="startTime" id="startTime" class="bookingTime" style="margin:0 8px 0 20px;">
                         </select>
-                    </div>
-                    <span class="fl ml6 mr6">~</span>
-                #*<input type="text" class="u-txt date fl" value="2016-07-01" onfocus="SelectDate(this, 0);">*#
-                    <div class="u-select j-select2 fl ml10" style="width: 65px;">
-                        <select name="province" id="province">
-                            <option>12:00</option>
-                            <option>11:00</option>
-                            <option>10:00</option>
+                        <span class="fl ml6 mr6">~</span>
+                        <select name="endTime" id="endTime" class="bookingTime" style="margin:0 17px 0 8px;">
                         </select>
+                        <label class="u-checkbox ml10 checked">#*<input type="checkbox"><i class="ico"></i>全天事件</label><br>*#
+                        <span id="error" class="f12 c7"></span>
                     </div>
-                    <label class="u-checkbox ml10 checked"><input type="checkbox" checked=""><i
-                            class="ico"></i>全天事件</label><br>
-                    <span class="f12 c7">抱歉，该时段已被预定</span>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-4">地点</label>
-                <select name="room" id="room"></select>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-4">设备</label>
-                <div class="col-offset-4 m-checkbox-horizontal">
-                    <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>画板</label>
-                    <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>笔记本电脑</label>
-                    <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>翻页笔</label>
-                    <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>智能电话</label>
-                    <label class="u-checkbox"><input type="checkbox"><i class="ico"></i>投影仪</label>
+                <div class="form-group">
+                    <label class="control-label col-4">设备</label>
+                    <div class="col-offset-4 m-checkbox-horizontal" id="devices"></div>
                 </div>
-            </div>
-            <div class="form-group" style="z-index: 2;">
-                <label class="control-label col-4">提醒</label>
-                <div class="col-offset-4">
-                    <div class="u-select j-select1 fl" style="width: 100px;">
-                        <select name="province" id="province">
-                            <option>10分钟前</option>
-                            <option>15分钟前</option>
-                            <option>30分钟前</option>
-                            <option>1小时前</option>
-                            <option>2小时前</option>
-                            <option>6小时前</option>
-                            <option>12小时前</option>
-                            <option>18小时前</option>
-                            <option>1天前</option>
-                            <option>2天前</option>
-                        </select>
-                    </div>
-                    <label class="control-label col-5 ml20">提醒方式：</label>
-                    <div class="col-offset-5">
-                        <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>邮件</label>
-                        <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>短信</label>
-                    </div>
+                <div class="form-group" style="z-index: 2;">
+                    <label class="control-label col-4">提醒</label>
+                    <div class="col-offset-4">
+                        <div class="u-select j-select1 fl" style="width: 100px;">
+                            <select name="province" id="province">
+                                <option>10分钟前</option>
+                                <option>15分钟前</option>
+                                <option>30分钟前</option>
+                                <option>1小时前</option>
+                                <option>2小时前</option>
+                                <option>6小时前</option>
+                                <option>12小时前</option>
+                                <option>18小时前</option>
+                                <option>1天前</option>
+                                <option>2天前</option>
+                            </select>
+                        </div>
+                        <label class="control-label col-5 ml20">提醒方式：</label>
+                        <div class="col-offset-5">
+                            <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>邮件</label>
+                            <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>短信</label>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="pop-ft mt50">
-        <div class="m-btn-group tc">
-            <a href="#" class="u-btn u-btn-primary" onclick="booking()">确定</a>
-            <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
+        <div class="pop-ft mt50">
+            <div class="m-btn-group tc">
+                <a href="#" class="u-btn u-btn-primary" onclick="validateAndsubmit()">确定</a>
+                <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
+            </div>
         </div>
+        <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
     </div>
-    <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
 </div>
 </div>
 <div class="layer-con layer-book-success">
@@ -149,13 +161,12 @@
                 <h2 class="h2 fn mt6">预定成功</h2>
             </div>
             <div class="layer-information mt20">
-                <p class="f12 c3 lh20">预定人：欧阳菲菲<br>地点：平台中心会议室<br>主题：项目会议讨论<br>时间：2016-11-20 14:30~16:0</p>
+                <p id="successShow" class="f12 c3 lh20"></p>
             </div>
         </div>
         <div class="pop-ft mt50">
             <div class="m-btn-group tc">
-                <a href="#" class="u-btn u-btn-primary">确定</a>
-                <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
+                <a href="#" class="u-btn u-btn-primary" onclick="dialog.closePop()">确定</a>
             </div>
         </div>
         <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
@@ -167,15 +178,13 @@
 <script src="/js/mcalendar.js"></script>
 <script>
     var rooms =${rooms};
+    console.log(JSON.stringify(rooms));
     var roomNames = getRoomNamesJson(rooms);//json对象
     $(function () {
         refresh(${bookings});
         var selectDate = new Date().format("yyyy-MM-dd");
         $('.date-txt').html(selectDate);
         $('#bookingDate').val(selectDate);
-        /*for(i=0;i<rooms.length;i++){
-            $('#room').append("<option value='"+rooms[i].id+"'>"+rooms[i].name+"</option>")
-        }*/
         var d = new Date(), aDate = $('.date-txt').html().split('-');
         d.setFullYear(aDate[0], aDate[1] - 1, aDate[2]);
         $('#oDate').calendar({
@@ -188,18 +197,53 @@
             onSelected: function (view, date, data) {
                 var strT = date.getFullYear() + '-' + (date.getMonth() < 10 ? '0' + (date.getMonth() * 1 + 1) : (date.getMonth() * 1 + 1)) + '-' + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
                 $('.date-txt').html(strT);
+                $('#bookingDate').val(strT);
+                bookingQuery(strT);
             }
         });
         $('.u-select').select();
         $('.u-checkbox').checkbox();
+        //$('#roomId').empty();
+        for (i = 0; i < rooms.length; i++) {
+            $('#roomId').append("<option value='" + rooms[i].id + "'>" + rooms[i].name + "</option>");
+        }
+        changeRoom();
     })
+
+    function changeRoom() {
+        var roomIndex = $('#roomId').get(0).selectedIndex;
+        $('#startTime').empty();
+        $('#endTime').empty();
+        $('#devices').empty();
+        var ti = rooms[roomIndex].startTime, tj = rooms[roomIndex].endTime;
+        var di = new Date();
+        for (i = ti, j = tj; i < tj;) {
+            $('#startTime').append("<option>" + i + "</option>");
+            $('#endTime').append("<option>" + j + "</option>");
+            var ii = i.split(':');
+            if (ii[1] == 30) {
+                di.setHours(parseInt(ii[0]) + 1, 0);
+            } else {
+                di.setHours(ii[0], 30);
+            }
+            i = di.format("hh:mm");
+            di.setHours(j.split(':')[0], j.split(':')[1] - 30);
+            j = di.format("hh:mm");
+        }
+        for (i = 0; i < rooms[roomIndex].deviceNames.length; i++) {
+            $('#devices').append("<label class='devices'><input type='checkbox' name='devices' value='"
+                    + rooms[roomIndex].deviceNames[i] + "'><i class='ico'></i>"
+                    + rooms[roomIndex].deviceNames[i] + "</label>");
+        }
+    }
 
     /**
      *
-     * @param roomNames json对象
      * @param booking json对象
      */
     function refresh(booking) {
+        console.log(JSON.stringify(booking));
+        $('.metting-reservation-bd').empty();
         $('.metting-reservation-bd').timeChart({
             'xAxis': ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'],
             'yAxis': roomNames,
@@ -228,37 +272,115 @@
         return JSON.parse(roomNames);
     }
 
-    function bookingQuery(date) {
-        jQuery.getJSON("/booking/query", {date: date}, function (result) {
-            alert(date);
-            refresh(result);
+    function validateAndsubmit() {
+        var topic = $('#topic').val().trim();
+        if (topic == null || topic == "") {
+            $('#error').html("请输入主题");
+            return
+        }
+        var date = $('#bookingDate').val().trim();
+        if(date<new Date().format("yyyy-MM-dd")){
+            $('#error').html("请输入一个未来日期");
+            return
+        }
+        var startTime = $('#startTime').val().trim();
+        var endTime = $('#endTime').val().trim();
+        if (startTime >= endTime) {
+            $('#error').html("开始时间应该小于结束时间");
+            return
+        }
+        /*if (!validateBookingTime(roomName, startTime, endTime)) {
+            $('#error').html("时间被占用");
+            return
+        }*/
+        var roomId = $('#roomId').val();
+        var devices = [];
+        $('input[name=devices]:checked').each(function () {
+            devices.push($(this).val());
+        })
+        jQuery.ajax({
+            type: 'POST',
+            url: "/booking",
+            data: {
+                "topic": topic,
+                "date": date,
+                "startTime": startTime,
+                "endTime": endTime,
+                "roomId": roomId,
+                "device": devices.join(',')
+            },
+            success: function (result) {
+                switch (result.code) {
+                    case 0:
+                        window.location.href = "/login";
+                        break;
+                    case 1:
+                        $('#error').html("预定失败，请联系运维");
+                        return;
+                    case 2:
+                        var roomName = $('#roomId option:selected').text().trim();
+                        bookSuccess(roomName, topic, date, startTime, endTime);
+                        $('.date-txt').html(date);
+                        refresh(result.bookings);
+                        break;
+                    case 3:$('#error').html("该时间段已被占用");
+                }
+            }
         });
     }
 
+    function bookingQuery(date) {
+        jQuery.getJSON("/booking/query",{date: date},function (result) {
+            if(result.code==0){
+                alert("未登录");
+                return;
+            }else if(result.code==1){
+                //alert("ok");
+            }
+            refresh(result.bookings);
+        });
+    }
     function bookMetting() {
         dialog.init({
             'w': 735,
             'h': 502,
             'layer': '.lay-book'
         });
+        $('#error').html("");
     }
-    function booking() {
-        jQuery.ajax({
-            type: 'POST',
-            url: "/booking",
-            data: {},
-            success: function (result) {
-                var jsonObj = JSON.parse(result)
-                alert(jsonObj);
-            }
-        })
-    }
-    function bookSuccess() {
+
+    function bookSuccess(roomName, topic, date, startTime, endTime) {
         dialog.init({
             'w': 735,
             'h': 502,
             'layer': '.layer-book-success'
         })
+        $('#successShow').html("预定人："+name+"<br>地点：" + roomName + "<br>主题：" + topic
+                + "<br>时间：" + date + "   " + startTime + "~" + endTime);
     }
+
+    /*
+        /!**
+         *
+         * @param roomName
+         * 返回json格式
+         *!/
+        function validateBookingTime(roomName, startTime, endTime) {
+            if (date != $('.date-txt').html()) {
+                $('.date-txt').html(date);
+                bookingQuery(date,1);
+            }
+            var bookings =
+            console.log(bookings.)
+            for (i = 0; i < bookings.length; i++) {
+                if (bookings[i].address == roomName) {
+                    if (startTime < bookings[i].endTime && endTime > bookings[i].startTime) {
+                        return false;//时间被占用
+                    }
+                }
+            }
+            return true;//成功
+        }
+    */
 </script>
 </html>

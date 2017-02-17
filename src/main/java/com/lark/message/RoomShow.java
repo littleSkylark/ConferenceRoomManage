@@ -9,14 +9,23 @@ public class RoomShow {
     private int id;
     private String name;
     private List<String> deviceNames;
-    private List<String> times;
+    private String startTime;
+    private String endTime;
 
-    public List<String> getTimes() {
-        return times;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setTimes(List<String> times) {
-        this.times = times;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public int getId() {

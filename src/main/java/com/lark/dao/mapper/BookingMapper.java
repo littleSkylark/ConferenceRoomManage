@@ -1,8 +1,11 @@
 package com.lark.dao.mapper;
 
 import com.lark.dao.pojo.Booking;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface BookingMapper {
@@ -17,4 +20,6 @@ public interface BookingMapper {
     int updateByPrimaryKeySelective(Booking record);
 
     int updateByPrimaryKey(Booking record);
+
+    List<Booking> selectByRoomId(@Param("roomId") Integer roomId,@Param("date") Date date);
 }

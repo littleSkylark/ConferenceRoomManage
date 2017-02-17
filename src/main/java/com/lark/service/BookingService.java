@@ -41,23 +41,27 @@ public class BookingService {
             BookingShow bookingShow = new BookingShow();
             if (id == booking.getUserId()) {
                 bookingShow.setId("mybook");
+                bookingShow.setMettingTheme(booking.getTopic());
+                Room room = roomMapper.selectByPrimaryKey(booking.getRoomId());
+                bookingShow.setAddress(room.getName() + " ( " + room.getMinNum() + "~" + room.getMaxNum() + "人 )");
+                User user = userMapper.selectByPrimaryKey(booking.getUserId());
+                bookingShow.setBookPeople(user.getName());
             } else {
                 bookingShow.setId("booked");
             }
             bookingShow.setDate(strDate);
-            bookingShow.setMettingTheme(booking.getTopic());
             bookingShow.setStartTime(DateFormat.toTime(booking.getStartTime()));
             bookingShow.setEndTime(DateFormat.toTime(booking.getEndTime()));
 
-            Room room = roomMapper.selectByPrimaryKey(booking.getRoomId());
-            bookingShow.setAddress(room.getName() + " ( " + room.getMinNum() + "~" + room.getMaxNum() + "人 )");
 
-            User user = userMapper.selectByPrimaryKey(booking.getUserId());
-            bookingShow.setBookPeople(user.getName());
 
             lists.add(bookingShow);
         }
         return lists;
     }
 
+    public int insertBooking(Booking booking) {
+        int BookingId=bookingMapper.insertSelective(booking);
+        return BookingId;
+    }
 }

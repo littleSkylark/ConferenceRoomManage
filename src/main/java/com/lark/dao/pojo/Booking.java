@@ -1,5 +1,7 @@
 package com.lark.dao.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Booking {
@@ -95,7 +97,7 @@ public class Booking {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(@DateTimeFormat(pattern = "hh:mm") Date startTime) {
         this.startTime = startTime;
     }
 
@@ -103,7 +105,7 @@ public class Booking {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(@DateTimeFormat(pattern = "hh:mm") Date endTime) {
         this.endTime = endTime;
     }
 
@@ -129,5 +131,22 @@ public class Booking {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", companyId=" + companyId +
+                ", userId=" + userId +
+                ", roomId=" + roomId +
+                ", topic='" + topic + '\'' +
+                ", date=" + date +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", device='" + device + '\'' +
+                ", bookTime=" + bookTime +
+                ", status=" + status +
+                '}';
     }
 }
