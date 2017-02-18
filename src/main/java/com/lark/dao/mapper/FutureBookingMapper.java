@@ -22,4 +22,6 @@ public interface FutureBookingMapper {
     int updateByPrimaryKeySelective(FutureBooking record);
 
     int updateByPrimaryKey(FutureBooking record);
+
+    int deleteInvalid(@Param("date") Date date);
 }
