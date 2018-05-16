@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="webkit" name="renderer">
+    <title>会议室预定</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <style type="text/css">
+        .bookingTime {
+            width: 126px;
+            width: 102px;
+            height: 36px;
+            float: left;
+            display: inline;
+            border: 1px solid #e5e5e5;
+        }
+
+        .devices {
+            position: relative;
+            font-size: 14px;
+            min-height: 20px;
+            line-height: 20px;
+            color: #666;
+            display: inline-block;
+            cursor: pointer;
+            padding-right: 22px;
+        }
+
+        .devices input {
+            border-radius: 0;
+            width: 14px;
+            height: 14px;
+            outline: none;
+            margin: 5px 8px;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+<!-- siteNav start -->
+<script type="text/javascript" src="/temp/siteNav.js"></script>
+<!-- siteNav end -->
+
+<!-- header start -->
+<script type="text/javascript" src="/temp/header.js"></script>
+<!-- header end -->
+
+<!-- content start -->
+<div class="nav-main">
+    <div class="container clearfix">
+        <div class="nav-list fr">
+            <a href="#" class="nav-active">预定管理</a>
+            <a href="#">预定记录</a>
+        </div>
+        <h1>会议室预定</h1>
+    </div>
+</div>
+
+<div class="container wrap">
+    <div class="metting-reservation-hd">
+        <div class="metting-date">
+            <span class="date-txt"></span>
+            <a href="javascript:" class="icon-date ml6"></a>
+            <div id="oDate"></div>
+        </div>
+        <a href="javascript:;" class="u-btn u-btn-primary" onclick="bookMetting()">预定会议室</a>
+    </div>
+    <div class="metting-reservation-bd clearfix mt20"></div>
+</div>
+<!-- content end -->
+
+<!-- footer start -->
+<script type="text/javascript" src="/temp/footer.js"></script>
+<!-- footer end -->
+
+<div class="layer-con lay-book">
+    <div class="popupLayer">
+        <div class="pop-hd">
+            <h2 class="title">预定会议</h2>
+        </div>
+        <div class="pop-bd mt30">
+            <div class="m-form ml20">
+                <div class="form-group">
+                    <label class="control-label col-4"><i>*</i>主题</label>
+                    <div class="col-offset-4">
+                        <input id="topic" class="u-txt" type="text" style="width: 495px;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-4">地点</label>
+                    <div class="col-offset-4">
+                        <select onchange="changeRoom()" name="roomId" id="roomId" class="bookingTime"
+                                style="margin:0;width: 30%;">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mb4" style="z-index: 3;">
+                    <label class="control-label col-4">日期</label>
+                    <div class="col-offset-4">
+                        <input type="text" class="u-txt date fl" id="bookingDate" onfocus="SelectDate(this, 0);">
+                        <select name="startTime" id="startTime" class="bookingTime" style="margin:0 8px 0 20px;">
+                        </select>
+                        <span class="fl ml6 mr6">~</span>
+                        <select name="endTime" id="endTime" class="bookingTime" style="margin:0 17px 0 8px;">
+                        </select>
+                        <label class="u-checkbox ml10 checked">#*<input type="checkbox"><i class="ico"></i>全天事件</label><br>*#
+                        <span id="error" class="f12 c7"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-4">设备</label>
+                    <div class="col-offset-4 m-checkbox-horizontal" id="devices"></div>
+                </div>
+                <div class="form-group" style="z-index: 2;">
+                    <label class="control-label col-4">提醒</label>
+                    <div class="col-offset-4">
+                        <div class="u-select j-select1 fl" style="width: 100px;">
+                            <select name="province" id="province">
+                                <option>10分钟前</option>
+                                <option>15分钟前</option>
+                                <option>30分钟前</option>
+                                <option>1小时前</option>
+                                <option>2小时前</option>
+                                <option>6小时前</option>
+                                <option>12小时前</option>
+                                <option>18小时前</option>
+                                <option>1天前</option>
+                                <option>2天前</option>
+                            </select>
+                        </div>
+                        <label class="control-label col-5 ml20">提醒方式：</label>
+                        <div class="col-offset-5">
+                            <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>邮件</label>
+                            <label class="u-checkbox ml10"><input type="checkbox"><i class="ico"></i>短信</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pop-ft mt50">
+            <div class="m-btn-group tc">
+                <a href="#" class="u-btn u-btn-primary" onclick="validateAndsubmit()">确定</a>
+                <a href="#" class="u-btn u-btn-default close" onclick="dialog.closePop()">取消</a>
+            </div>
+        </div>
+        <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
+    </div>
+</div>
+</div>
+<div class="layer-con layer-book-success">
+    <div class="popupLayer">
+        <div class="pop-hd"></div>
+        <div class="pop-bd">
+            <div class="m-feedback mt50">
+                <i class="iconfont success">&#xe612;</i>
+                <h2 class="h2 fn mt6">预定成功</h2>
+            </div>
+            <div class="layer-information mt20">
+                <p id="successShow" class="f12 c3 lh20"></p>
+            </div>
+        </div>
+        <div class="pop-ft mt50">
+            <div class="m-btn-group tc">
+                <a href="#" class="u-btn u-btn-primary" onclick="dialog.closePop()">确定</a>
+            </div>
+        </div>
+        <a href="javascript:;" class="u-pop-close close">&#xe600;</a>
+    </div>
+</div>
+</body>
+<script src="/js/calendar.js"></script>
+<script src="/js/page.js"></script>
+<script src="/js/mcalendar.js"></script>
+<script>
+    var rooms =${rooms};
+    console.log(JSON.stringify(rooms));
+    var roomNames = getRoomNamesJson(rooms);//json对象
+    $(function () {
+        refresh(${bookings});
+        var selectDate = new Date().format("yyyy-MM-dd");
+        $('.date-txt').html(selectDate);
+        $('#bookingDate').val(selectDate);
+        var d = new Date(), aDate = $('.date-txt').html().split('-');
+        d.setFullYear(aDate[0], aDate[1] - 1, aDate[2]);
+        $('#oDate').calendar({
+            width: 338,
+            height: 290,
+            trigger: '.icon-date',
+            zIndex: 999,
+            format: 'yyyy-mm-dd',
+            date: d,
+            onSelected: function (view, date, data) {
+                var strT = date.getFullYear() + '-' + (date.getMonth() < 10 ? '0' + (date.getMonth() * 1 + 1) : (date.getMonth() * 1 + 1)) + '-' + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
+                $('.date-txt').html(strT);
+                $('#bookingDate').val(strT);
+                bookingQuery(strT);
+            }
+        });
+        $('.u-select').select();
+        $('.u-checkbox').checkbox();
+        //$('#roomId').empty();
+        for (i = 0; i < rooms.length; i++) {
+            $('#roomId').append("<option value='" + rooms[i].id + "'>" + rooms[i].name + "</option>");
+        }
+        changeRoom();
+    })
+
+    function changeRoom() {
+        var roomIndex = $('#roomId').get(0).selectedIndex;
+        $('#startTime').empty();
+        $('#endTime').empty();
+        $('#devices').empty();
+        var ti = rooms[roomIndex].startTime, tj = rooms[roomIndex].endTime;
+        var di = new Date();
+        for (i = ti, j = tj; i < tj;) {
+            $('#startTime').append("<option>" + i + "</option>");
+            $('#endTime').append("<option>" + j + "</option>");
+            var ii = i.split(':');
+            if (ii[1] == 30) {
+                di.setHours(parseInt(ii[0]) + 1, 0);
+            } else {
+                di.setHours(ii[0], 30);
+            }
+            i = di.format("hh:mm");
+            di.setHours(j.split(':')[0], j.split(':')[1] - 30);
+            j = di.format("hh:mm");
+        }
+        for (i = 0; i < rooms[roomIndex].deviceNames.length; i++) {
+            $('#devices').append("<label class='devices'><input type='checkbox' name='devices' value='"
+                    + rooms[roomIndex].deviceNames[i] + "'><i class='ico'></i>"
+                    + rooms[roomIndex].deviceNames[i] + "</label>");
+        }
+    }
+
+    /**
+     *
+     * @param booking json对象
+     */
+    function refresh(booking) {
+        console.log(JSON.stringify(booking));
+        $('.metting-reservation-bd').empty();
+        $('.metting-reservation-bd').timeChart({
+            'xAxis': ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'],
+            'yAxis': roomNames,
+            'xStep': 2,
+            'data': booking,
+            'showFigureNote': true,
+            'figureNote': [
+                {'text': '我的预定', 'bgcolor': '#47C978', 'borderC': '#47C978'},
+                {'text': '已被预定', 'bgcolor': '#F4F4F4', 'borderC': '#F4F4F4'},
+                {'text': '可预定', 'bgcolor': '#fff', 'borderC': '#eee'}
+            ]
+        });
+    }
+
+    /**
+     * 获取会议室名的json对象
+     * @param rooms json对象
+     * @return json对象
+     */
+    function getRoomNamesJson(rooms) {
+        var roomNames = "[\"";
+        for (i = 0; i < rooms.length; i++) {
+            roomNames += rooms[i].name + "\",\"";
+        }
+        roomNames = roomNames.substring(0, roomNames.length - 2) + "]";
+        return JSON.parse(roomNames);
+    }
+
+    function validateAndsubmit() {
+        var topic = $('#topic').val().trim();
+        if (topic == null || topic == "") {
+            $('#error').html("请输入主题");
+            return
+        }
+        var date = $('#bookingDate').val().trim();
+        if(date<new Date().format("yyyy-MM-dd")){
+            $('#error').html("请输入一个未来日期");
+            return
+        }
+        var startTime = $('#startTime').val().trim();
+        var endTime = $('#endTime').val().trim();
+        if (startTime >= endTime) {
+            $('#error').html("开始时间应该小于结束时间");
+            return
+        }
+        /*if (!validateBookingTime(roomName, startTime, endTime)) {
+            $('#error').html("时间被占用");
+            return
+        }*/
+        var roomId = $('#roomId').val();
+        var devices = [];
+        $('input[name=devices]:checked').each(function () {
+            devices.push($(this).val());
+        })
+        jQuery.ajax({
+            type: 'POST',
+            url: "/booking",
+            data: {
+                "topic": topic,
+                "date": date,
+                "startTime": startTime,
+                "endTime": endTime,
+                "roomId": roomId,
+                "device": devices.join(',')
+            },
+            success: function (result) {
+                switch (result.code) {
+                    case 0:
+                        window.location.href = "/login";
+                        break;
+                    case 1:
+                        $('#error').html("预定失败，请联系运维");
+                        return;
+                    case 2:
+                        var roomName = $('#roomId option:selected').text().trim();
+                        bookSuccess(roomName, topic, date, startTime, endTime);
+                        $('.date-txt').html(date);
+                        refresh(result.bookings);
+                        break;
+                    case 3:$('#error').html("该时间段已被占用");
+                }
+            }
+        });
+    }
+
+    function bookingQuery(date) {
+        jQuery.getJSON("/booking/query",{date: date},function (result) {
+            if(result.code==0){
+                alert("未登录");
+                return;
+            }else if(result.code==1){
+                //alert("ok");
+            }
+            refresh(result.bookings);
+        });
+    }
+    function bookMetting() {
+        dialog.init({
+            'w': 735,
+            'h': 502,
+            'layer': '.lay-book'
+        });
+        $('#error').html("");
+    }
+
+    function bookSuccess(roomName, topic, date, startTime, endTime) {
+        dialog.init({
+            'w': 735,
+            'h': 502,
+            'layer': '.layer-book-success'
+        })
+        $('#successShow').html("预定人："+name+"<br>地点：" + roomName + "<br>主题：" + topic
+                + "<br>时间：" + date + "   " + startTime + "~" + endTime);
+    }
+
+    /*
+        /!**
+         *
+         * @param roomName
+         * 返回json格式
+         *!/
+        function validateBookingTime(roomName, startTime, endTime) {
+            if (date != $('.date-txt').html()) {
+                $('.date-txt').html(date);
+                bookingQuery(date,1);
+            }
+            var bookings =
+            console.log(bookings.)
+            for (i = 0; i < bookings.length; i++) {
+                if (bookings[i].address == roomName) {
+                    if (startTime < bookings[i].endTime && endTime > bookings[i].startTime) {
+                        return false;//时间被占用
+                    }
+                }
+            }
+            return true;//成功
+        }
+    */
+</script>
+</html>

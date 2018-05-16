@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lark.dao.mapper.BookingMapper">
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.Booking">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="userId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="roomId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="topic" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIME" />
+      <arg column="device" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="bookTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="status" javaType="java.lang.Boolean" jdbcType="BIT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyId, userId, roomId, topic, date, startTime, endTime, device, bookTime, 
+    status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from booking
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByRoomId" resultType="com.lark.dao.pojo.Booking">
+    select * from booking where roomId=#{roomId,jdbcType=INTEGER} and date=#{date,jdbcType=DATE};
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from booking
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.Booking">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into booking (companyId, userId, roomId, 
+      topic, date, startTime, endTime, 
+      device, bookTime, status
+      )
+    values (#{companyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER}, 
+      #{topic,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, #{startTime,jdbcType=TIME}, #{endTime,jdbcType=TIME}, 
+      #{device,jdbcType=VARCHAR}, #{bookTime,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.Booking">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into booking
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        companyId,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="roomId != null">
+        roomId,
+      </if>
+      <if test="topic != null">
+        topic,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="startTime != null">
+        startTime,
+      </if>
+      <if test="endTime != null">
+        endTime,
+      </if>
+      <if test="device != null">
+        device,
+      </if>
+      <if test="bookTime != null">
+        bookTime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="topic != null">
+        #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIME},
+      </if>
+      <if test="device != null">
+        #{device,jdbcType=VARCHAR},
+      </if>
+      <if test="bookTime != null">
+        #{bookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.Booking">
+    update booking
+    <set>
+      <if test="companyId != null">
+        companyId = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roomId != null">
+        roomId = #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="topic != null">
+        topic = #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="startTime != null">
+        startTime = #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null">
+        endTime = #{endTime,jdbcType=TIME},
+      </if>
+      <if test="device != null">
+        device = #{device,jdbcType=VARCHAR},
+      </if>
+      <if test="bookTime != null">
+        bookTime = #{bookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.Booking">
+    update booking
+    set companyId = #{companyId,jdbcType=INTEGER},
+      userId = #{userId,jdbcType=INTEGER},
+      roomId = #{roomId,jdbcType=INTEGER},
+      topic = #{topic,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE},
+      startTime = #{startTime,jdbcType=TIME},
+      endTime = #{endTime,jdbcType=TIME},
+      device = #{device,jdbcType=VARCHAR},
+      bookTime = #{bookTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

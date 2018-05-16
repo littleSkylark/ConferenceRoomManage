@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lark.dao.mapper.FutureBookingMapper">
+  <resultMap id="BaseResultMap" type="com.lark.dao.pojo.FutureBooking">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="bookingId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="companyId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="date" javaType="java.util.Date" jdbcType="DATE" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, bookingId, companyId, date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from futurebooking
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCompanyId" resultType="java.lang.Integer">
+    select bookingId from futurebooking where companyId=#{companyId,jdbcType=INTEGER} and date=#{date,jdbcType=DATE};
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from futurebooking
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteInvalid">
+    DELETE from futurebooking where date&lt;#{date,jdbcType=DATE}
+  </delete>
+  <insert id="insert" parameterType="com.lark.dao.pojo.FutureBooking">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebooking (bookingId, companyId, date
+      )
+    values (#{bookingId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{date,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lark.dao.pojo.FutureBooking">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into futurebooking
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bookingId != null">
+        bookingId,
+      </if>
+      <if test="companyId != null">
+        companyId,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bookingId != null">
+        #{bookingId,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lark.dao.pojo.FutureBooking">
+    update futurebooking
+    <set>
+      <if test="bookingId != null">
+        bookingId = #{bookingId,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        companyId = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lark.dao.pojo.FutureBooking">
+    update futurebooking
+    set bookingId = #{bookingId,jdbcType=INTEGER},
+      companyId = #{companyId,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
